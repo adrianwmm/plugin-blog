@@ -39,3 +39,67 @@ img.blog_archive_bar {
   border: 0 none;
   vertical-align: bottom;
 }
+
+
+
+/*
+
+	ADRIAN
+
+*/
+
+.blog_row {
+	
+	overflow:hidden;
+	margin: 0 0 0;
+	padding: 10px 0 10px;
+	/*border-bottom: 1px solid #ddd;*/
+}
+
+	.blog_row h1, .blog_row h2, .blog_row h3, .blog_row h4, .blog_row h5, .blog_row h6 {
+		clear: none;	
+	}
+	
+	.blog_row img {
+		margin: 0 20px 0 0;	
+		padding: 2px;
+		border: 1px solid #ddd;
+		background: #fff;
+		float: left;
+	}
+	
+	.blog_row  p {
+		margin-bottom: 0;	
+	}
+	
+	.level2 .blog_row + hr:last-child {
+		
+	}
+	
+	
+	
+#blog__newentry_form fieldset {
+	
+	width: auto;
+	background: #eee;
+	text-align: left;
+	
+}
+	#blog__newentry_form fieldset legend {
+		background: #eee;	
+		padding: 10px;
+		border: 1px solid #ccc;	
+		-moz-box-shadow: 0 0 3px 0px #ccc;
+		-webkit-box-shadow: 0 0 3px 0px #ccc;
+		box-shadow: 0 0 3px 0px #ccc;
+	}
+
+	#blog__newentry_form fieldset input {
+		margin: 5px;
+		padding: 3px;
+		border: 1px solid #ccc;	
+	}
+	
+	
+	
+	

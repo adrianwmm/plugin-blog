@@ -27,6 +27,7 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
     }
 
     function handle($match, $state, $pos, &$handler) {
+		
         global $ID;
 
         $match = substr($match, 7, -2); // strip {{blog> from start and }} from end
@@ -55,14 +56,20 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
 
     function render($mode, &$renderer, $data) {
         list($ns, $num, $flags, $refine) = $data;
-
+		
         $first = $_REQUEST['first'];
         if (!is_numeric($first)) $first = 0;
 
         // get the blog entries for our namespace
         /** @var helper_plugin_blog $my */
-        if ($my =& plugin_load('helper', 'blog')) $entries = $my->getBlog($ns);
-        else return false;
+        if ($my =& plugin_load('helper', 'blog')) 
+			if($flags[1] > 0) {
+				$entries = $my->getBlog($ns);
+			} else {
+				$entries = FALSE;	
+			}
+		else 
+			return false;
 
         // use tag refinements?
         if ($refine) {
@@ -123,6 +130,7 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
         }
 
         $include_flags = $include->get_flags($flags);
+
 
         // now include the blog entries
         foreach ($entries as $entry) {
@@ -190,20 +198,63 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
      */
     function _newEntryForm($ns, $newentrytitle) {
         global $lang;
+		global $conf;
         global $ID;
-
+  
         return '<div class="newentry_form">'.DOKU_LF.
             '<form id="blog__newentry_form" method="post" action="'.script().'" accept-charset="'.$lang['encoding'].'">'.DOKU_LF.
             DOKU_TAB.'<fieldset>'.DOKU_LF.
-            DOKU_TAB.DOKU_TAB.'<legend>'.hsc($newentrytitle).'</legend>'.DOKU_LF.
+            DOKU_TAB.DOKU_TAB.'<legend><strong>'.hsc($newentrytitle).'</strong></legend>'.DOKU_LF.
             DOKU_TAB.DOKU_TAB.'<input type="hidden" name="id" value="'.$ID.'" />'.DOKU_LF.
             DOKU_TAB.DOKU_TAB.'<input type="hidden" name="do" value="newentry" />'.DOKU_LF.
-            DOKU_TAB.DOKU_TAB.'<input type="hidden" name="ns" value="'.$ns.'" />'.DOKU_LF.
-            DOKU_TAB.DOKU_TAB.'<input class="edit" type="text" name="title" id="blog__newentry_title" size="40" tabindex="1" />'.DOKU_LF.
+            //DOKU_TAB.DOKU_TAB.'<input type="hidden" name="ns" value="'.$ns.'" />'.DOKU_LF.
+			
+			//START Adrian
+			DOKU_TAB.DOKU_TAB.'Kategoria: <select name="ns"/>'.DOKU_LF.
+			DOKU_TAB.DOKU_TAB.DOKU_TAB.'<option value="' . $ns. '">' . $ns. '</option>'.DOKU_LF.
+			$this->show_dir(DOKU_INC . $conf['savedir'] . '/pages/' . str_replace(':', '/', $ns), '', 1, array($ns)).
+			DOKU_TAB.DOKU_TAB.'</select>'.DOKU_LF.
+			DOKU_TAB.DOKU_TAB.'lub podaj nazwę nowej <input type="text" name="ns_" id="ns_" size="30" tabindex="1" placeholder="np. blog:podkategoria:inna"/>'.DOKU_LF.
+			//END Adrian
+			
+            DOKU_TAB.DOKU_TAB.'<input class="edit" type="text" name="title" id="blog__newentry_title" size="40" tabindex="1" placeholder="Nazwa nowego artykułu"/>'.DOKU_LF.
             DOKU_TAB.DOKU_TAB.'<input class="button" type="submit" value="'.$lang['btn_create'].'" tabindex="2" />'.DOKU_LF.
             DOKU_TAB.'</fieldset>'.DOKU_LF.
             '</form>'.DOKU_LF.
             '</div>'.DOKU_LF;
+			
+
+				
     }
+	
+
+	
+	//START Adrian
+	private function show_dir($directory, $html = '', $i = 1, $ns = array()) {
+		
+		$dir = opendir($directory);
+		while ( $file = readdir($dir) ) {
+			if ( $file != '.' && $file != '..' ) {
+				if ( is_dir($directory.'/'.$file ) ) {
+					
+					array_push($ns, $file);
+					$html .= "<option value='" . implode(':', $ns) . "'>" . implode(':', $ns) . "</option>";
+					++$i;
+					$this->show_dir($directory . '/' . $file, &$html, &$i, &$ns);
+					
+				} 
+			}
+		}
+		
+		closedir($dir);
+		array_pop($ns);
+		--$i;
+		
+		return $html;
+		
+	}
+
+	
+	
 }
 // vim:ts=4:sw=4:et:enc=utf-8:

@@ -59,6 +59,14 @@ class helper_plugin_blog extends DokuWiki_Plugin {
         search($pages, $conf['datadir'], 'search_pagename', array('query' => '.txt'), $dir);
 
         foreach ($pages as $page) {
+			
+			
+			//stron o nazwach jak foldery nie poakzujemy
+			if(is_dir(DOKU_INC . $conf['savedir'] . '/pages/' . str_replace(':', '/', $page['id']))) {
+				continue;
+			}
+			//*/
+			
             $id = $page['id'];
             $file = wikiFN($id);
 
@@ -99,7 +107,7 @@ class helper_plugin_blog extends DokuWiki_Plugin {
 
             $result[$key] = array(
                     'id'     => $id,
-                    'title'  => $title,
+                    'title'  => $title, 
                     'date'   => $date,
                     'user'   => $meta['creator'],
                     'desc'   => $meta['description']['abstract'],
