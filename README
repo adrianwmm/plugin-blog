@@ -1,10 +1,15 @@
-====== Blog Plugin for DokuWiki ======
+News system — DokuWiki
 
-All documentation for the Blog Plugin is available online at:
+Dostosowanie trójki pluginów: blog, pagelist i include w celu stworzenia systemu obsługi aktualności w ramach strony opartej o dokuwiki. Wymagania:
 
-  * http://dokuwiki.org/plugin:blog
+    Umieszczanie aktualności w poddrzewie przestrzeni nazw DW (hierarchia kategorii).
+    Możliwość umieszczenia, przy pomocy odpowiedniego tagu, listy:
+        Tytułów wiadomości z linkami do podstron.
+        Tytułów wiadomości (link) wraz z datą utworzenia (span).
+        j.w., ale z kwadratową miniaturą dla pierwszej wiadomości.
+        Serii bloków, z których każdy składa się z kwadratowej miniatury, tytułu wiadomości, zajawki (określona liczba wyrazów/znaków lub fragment przed znacznikiem typu MORE).
+        j.w., ale z większym obrazkiem dla pierwszej wiadomości.
+    Możliwość dodawania tagów do artykułów (przy pomocy istniejącego pluginu DW).
+    Udostępnianie kanałów RSS dla poszczególnych kategorii newsów.
 
-(c) 2005 - 2007 by Esther Brunner <wikidesign@gmail.com>
-(c) 2008 - 2009 by Gina Häußge, Michael Klier <dokuwiki@chimeric.de>
-(c) 2013 by Michael Hamann <michael@content-space.de>
-See COPYING for license info.
+Projekt realizowany w oparciu o github, na forkach repozytoriów trzech ww. pluginów.
