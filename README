@@ -1,3 +1,16 @@
+====== Blog Plugin for DokuWiki ======
+
+All documentation for the Blog Plugin is available online at:
+
+  * http://dokuwiki.org/plugin:blog
+
+(c) 2005 - 2007 by Esther Brunner <wikidesign@gmail.com>
+(c) 2008 - 2009 by Gina Häußge, Michael Klier <dokuwiki@chimeric.de>
+(c) 2013 by Michael Hamann <michael@content-space.de>
+See COPYING for license info.
+
+====== Goals of modification ======
+
 News system — DokuWiki
 
 Dostosowanie trójki pluginów: blog, pagelist i include w celu stworzenia systemu obsługi aktualności w ramach strony opartej o dokuwiki. Wymagania:
