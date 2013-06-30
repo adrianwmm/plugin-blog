@@ -1,5 +1,5 @@
 <?
 
-	echo 'Helo!';
+	echo 'I said hello!';
 
 ?>
